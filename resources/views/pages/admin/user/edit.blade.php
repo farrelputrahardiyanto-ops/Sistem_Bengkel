@@ -1,24 +1,23 @@
 @extends('layouts.admin.form')
-
-@section('title', 'Create User')
+@section('title', 'Edit User')
+@section('content')
     <div class="container my-5">
         <div class="row">
             <div class="col-md-12">
                 <div class="card rounded border-0 shadow">
                     <div class="card-head">
                         <div class="row">
-                            <div class="col-md-3">
-                                <a href="{{ url()->previous() }}" class="btn btn-secondary my-3 mx-4"><i class="bi bi-arrow-left"></i></a>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <h2 class="text-center my-2">User</h2>
                             </div>
-                            <div class="col-md-3"></div>
                         </div>
                     </div>
                     <div class="card-body  mx-3">
 
-                        <form action="{{ route('user.store')}}" method="post"  enctype="multipart/form-data">
+                        <form action="{{ route('user.update', $user->id)}}" method="post"  enctype="multipart/form-data">
+
+                            @csrf
+                            @method('PATCH')
 
                             <div class="form-group mb-3">
                                 <label for="" class="font-weight-bold">Profile Picture</label>
@@ -27,22 +26,22 @@
 
                             <div class="form-group mb-3">
                                 <label for="">Name</label>
-                                <input type="text" name="name" class="form-control">
+                                <input type="text" name="name" class="form-control " value="{{ $user->name}}">
                             </div>
 
                             <div class="form-group mb-3">
                                 <label for="">Email</label>
-                                <input type="email" name="email" class="form-control">
+                                <input type="email" name="email" class="form-control" value="{{ $user->email}}">
                             </div>
 
                             <div class="form-group mb-3">
                                 <label for="">No Whatsapp</label>
-                                <input type="text" name="no_whatsapp" class="form-control">
+                                <input type="text" name="no_whatsapp" class="form-control" value="{{ $user->no_whatsapp}}">
                             </div>
 
                             <div class="form-group mb-3">
                                 <label for="">Password</label>
-                                <input type="password" name="password" class="form-control">
+                                <input type="password" name="password" class="form-control" value="">
                             </div>
 
                             <div class="form-group mb-3">
@@ -51,11 +50,12 @@
                             </div>
 
                             <div class="row">
-                               
-                                <div class="col-md-12 d-flex align-items-center justify-center">
+                                <div class="col-md-4 ">          
+                                </div>
+                                <div class="col-md-4 d-flex align-items-center justify-center">
                                      <button class="btn btn-md btn-primary">Submit</button>
                                 </div>
-                            
+                                <div class="col-md-4 "></div>
                             </div>
                            
                         </form>
