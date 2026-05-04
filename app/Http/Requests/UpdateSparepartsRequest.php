@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateSparepartsRequest extends FormRequest
 {
@@ -25,13 +26,19 @@ class UpdateSparepartsRequest extends FormRequest
         return [
             'name' => 'required|min:3',
             'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'brand_spareparts' => 'required|string',
+            'brand_sparepart' => 'required|string',
             'brand_car' => 'required|string',
             'car_type' => 'required|string',
-            'part_code' => 'required|string|unique:t_spareparts,part_code',
+            'part_code' => [
+              'required',
+            'string',
+               Rule::unique('t_spareparts', 'part_code')->ignore($this->route('sparepart')),
+                ]    ,
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'description' => 'required|string',
         ];
+
+        
     }
 }

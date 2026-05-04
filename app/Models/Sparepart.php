@@ -13,13 +13,12 @@ class Sparepart extends Model
     protected $fillable = [
         'name',
         'img',
-        'brand_spareparts',
+        'brand_sparepart',
         'brand_car',
         'car_type',
         'part_code',
         'price',
         'stock',
-        'description',
-        'image'
+        'description'
     ];
 }

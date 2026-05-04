@@ -27,15 +27,18 @@ class SparepartsController extends Controller
     function store(StoreSparepartsRequest $request) {
         $data = $request->validated();
 
-        $img = $request->file('img');
-        $img->storeAs('sparepart', $img->hashName(), 'public');
-        $data['img'] = $img->hashName();
+        if($request->hasFile('img')){
+            $img = $request->file('img');
+            $img->storeAs('sparepart', $img->hashName(), 'public');
+            $data['img'] = $img->hashName();
+        }
+       
 
         try {
             Sparepart::create($data);
             return redirect()->route('sparepart.index');
         } catch (Exception $e) {
-            return back()->with('error', 'Gagal memasukan data')->withInput();
+            return back()->with('error', 'Gagal memasukan data'. $e->getMessage())->withInput();
         }
     }
 

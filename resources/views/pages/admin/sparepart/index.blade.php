@@ -39,12 +39,12 @@
                                 <td>{{ $sparepart->stock }}</td>
                                 <td>{{ $sparepart->description }}</td>
                                 <td><img src="{{ Storage::url('sparepart/'.$sparepart->img) }}" alt="{{ $sparepart->name }}" width="100"></td>
-                                <td>
-                                    <a href="{{ route('sparepart.edit', $sparepart->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                <td class="d-flex">
+                                    <a href="{{ route('sparepart.edit', $sparepart->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                     <form action="{{ route('sparepart.destroy', $sparepart->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                        <button type="submit" class="btn btn-sm btn-danger mx-2" onclick="return confirm('Are you sure?')">Delete</button>
                                     </form>
                                 </td>
                             </tr>

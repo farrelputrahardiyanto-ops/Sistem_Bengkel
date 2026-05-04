@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreSparepartsRequest extends FormRequest
 {
@@ -25,10 +26,10 @@ class StoreSparepartsRequest extends FormRequest
         return [
             'name' => 'required|min:3',
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'brand_spareparts' => 'required|string',
+            'brand_sparepart' => 'required|string',
             'brand_car' => 'required|string',
             'car_type' => 'required|string',
-            'part_code' => 'required|string|unique:t_spareparts,part_code',
+            'part_code' => 'required|string|unique:t_spareparts, part_code',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:1',
             'description' => 'required|string',

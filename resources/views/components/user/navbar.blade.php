@@ -16,16 +16,16 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <ul class="navbar-nav">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('dashboard') }}">Home</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('sparepart*') ? 'active-custom' : '' }}" href="#">Sparepart</a>
+                    <a class="nav-link {{ request()->is('sparepart*') ? 'active-custom' : '' }}" href="{{ route('dashboard.sparepart.index') }}">Sparepart</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('servis*') ? 'active-custom' : '' }}" href="#">Servis</a>
+                    <a class="nav-link {{ request()->is('servis*') ? 'active-custom' : '' }}" href="{{ route('dashboard.servis') }}">Servis</a>
                 </li>
 
                 <li class="nav-item">

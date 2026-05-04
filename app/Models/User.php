@@ -15,7 +15,21 @@ class User extends Model
         'profile_picture',
         'email',
         'no_whatsapp',
-        'password',
+    
         'role'
     ];
-}
+
+    protected $hidden = [
+    'password'
+];
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isUser()
+    {
+        return $this->role === 'user';
+    }
+    }

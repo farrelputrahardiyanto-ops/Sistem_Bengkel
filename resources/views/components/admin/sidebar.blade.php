@@ -19,14 +19,18 @@
                 Cars
             </a>
             <div class="collapse ps-3" id="carMenu">
-                <a href="/admin/car-brands" class="nav-link text-white small">Brands</a>
-                <a href="/admin/car-models" class="nav-link text-white small">Models</a>
-                <a href="/admin/service-cars" class="nav-link text-white small">Service Cars</a>
+                <a href="{{ route('carbrand.index')}}" class="nav-link text-white small">Brands</a>
+                <a href="{{ route('carmodel.index')}}" class="nav-link text-white small">Models</a>
+                <a href="" class="nav-link text-white small">Service Cars</a>
             </div>
         </li>
 
         <li class="nav-item mb-2">
             <a href="{{ route('sparepart.index') }}" class="nav-link text-white">Spareparts</a>
+        </li>
+
+        <li class="nav-item mb-2">
+            <a href="{{ route('drivingpackage.index')}}" class="nav-link text-white">Driving Packages</a>
         </li>
 
         <li class="nav-item mb-2">

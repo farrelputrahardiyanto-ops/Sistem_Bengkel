@@ -35,7 +35,7 @@
 
                             <div class="form-group mb-3">
                                 <label for="">Brand Spareparts</label>
-                                <input type="text" name="brand_spareparts" class="form-control">    
+                                <input type="text" name="brand_sparepart" class="form-control">    
                             </div>
 
                             <div class="form-group mb-3">

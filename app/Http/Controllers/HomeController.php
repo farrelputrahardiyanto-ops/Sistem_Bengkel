@@ -11,4 +11,8 @@ class HomeController extends Controller
     public function index() {
         return view('pages.user.index');
     }
+
+    public function servis(){
+        return view('pages.user.servis');
+    }
 }
