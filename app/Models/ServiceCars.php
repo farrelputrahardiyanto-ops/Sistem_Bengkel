@@ -12,6 +12,7 @@ class ServiceCars extends Model
 
     protected $fillable = [
         'id',
+        'user_id',
         'plate_number',
         'car_model_id',
         'is_active',

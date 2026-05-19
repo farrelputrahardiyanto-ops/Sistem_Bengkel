@@ -4,7 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+
+
+class User extends Authenticatable
 {
     //
 
@@ -15,13 +20,11 @@ class User extends Model
         'profile_picture',
         'email',
         'no_whatsapp',
-    
+        'password',
         'role'
     ];
 
-    protected $hidden = [
-    'password'
-];
+    
 
     public function isAdmin()
     {

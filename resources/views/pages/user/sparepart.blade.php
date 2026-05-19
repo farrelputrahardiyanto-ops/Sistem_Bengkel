@@ -3,42 +3,91 @@
 @section('title', 'Spareparts')
 
 <style>
-.card {
-    transition: 0.3s;
-    position: relative;
+
+.product-card{
+    border-radius: 18px;
     overflow: hidden;
+    transition: .3s ease;
+    position: relative;
+    background: #fff;
 }
 
-.card:hover {
-    transform: translateY(-5px);
+.product-card:hover{
+    transform: translateY(-6px);
 }
 
-/* overlay button */
-.card-overlay {
-    position: absolute;
-    bottom: -50px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    transition: 0.3s;
+.product-card img{
+    transition: .3s ease;
 }
 
-.card:hover .card-overlay {
-    bottom: 15px;
+.product-card:hover img{
+    transform: scale(1.05);
 }
 
-/* dark hover effect */
-.card::after {
+/* DARK OVERLAY */
+.product-card::after{
     content: "";
     position: absolute;
     inset: 0;
     background: rgba(0,0,0,0);
-    transition: 0.3s;
+    transition: .3s ease;
+    pointer-events: none;
 }
 
-.card:hover::after {
-    background: rgba(0,0,0,0.2);
+.product-card:hover::after{
+    background: rgba(0,0,0,0.12);
 }
+
+/* HOVER ACTION */
+.card-actions{
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    width: 100%;
+    padding: 0 14px 14px;
+    transition: .3s ease;
+    z-index: 5;
+}
+
+.product-card:hover .card-actions{
+    bottom: 0;
+}
+
+.card-actions .btn{
+    border-radius: 12px;
+    height: 42px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.card-actions form{
+    margin: 0;
+}
+
+.buy-btn{
+    flex: 1;
+}
+
+.cart-btn{
+    width: 48px;
+}
+
+@media(max-width:576px){
+
+    .card-actions{
+        bottom: 0;
+        position: relative;
+        padding-top: 0;
+    }
+
+    .product-card::after{
+        display: none;
+    }
+
+}
+
+</style>
+
 </style>
 
 @section('content')
@@ -115,44 +164,87 @@
 
             <!-- GRID -->
             <div class="row">
-                @forelse($spareparts as $item)
-                    <div class="col-lg-3 col-md-4 col-6 mb-4">
 
-                        <a href="{{ route('sparepart.show', $item->id) }}" class="text-decoration-none text-dark">
-                            <div class="card h-100 shadow-sm border-0">
+    @forelse($spareparts as $item)
 
-                                <img src="{{ Storage::url('sparepart/'.$item->img) }}"
-                                     class="card-img-top"
-                                     style="height:150px; object-fit:contain;">
+        <div class="col-lg-3 col-md-4 col-6 mb-4">
 
-                                <div class="card-body text-center">
-                                    <h6 class="mb-1">{{ $item->name }}</h6>
-                                    <small class="text-muted">{{ $item->car_type }}</small>
+            <div class="card product-card shadow-sm border-0 h-100">
 
-                                    <p class="fw-bold mt-2">
-                                        Rp {{ number_format($item->price,0,',','.') }}
-                                    </p>
-                                </div>
+                {{-- CLICKABLE CONTENT --}}
+                <a href="{{ route('sparepart.show', $item->id) }}"
+                   class="text-decoration-none text-dark">
 
-                                <!-- HOVER BUTTON -->
-                                <div class="card-overlay">
-                                    <form action="" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="sparepart_id" value="{{ $item->id }}">
-                                        <button class="btn btn-warning btn-sm">
-                                            Add to Cart
-                                        </button>
-                                    </form>
-                                </div>
+                    <img src="{{ Storage::url('sparepart/'.$item->img) }}"
+                         class="card-img-top p-3"
+                         style="height:180px; object-fit:contain;">
 
-                            </div>
-                        </a>
+                    <div class="card-body text-center pb-5">
+
+                        <h6 class="mb-1 fw-semibold">
+                            {{ $item->name }}
+                        </h6>
+
+                        <small class="text-muted d-block">
+                            {{ $item->car_type }}
+                        </small>
+
+                        <p class="fw-bold text-warning mt-2 mb-0 fs-5">
+                            Rp {{ number_format($item->price,0,',','.') }}
+                        </p>
 
                     </div>
-                @empty
-                    <p class="text-center">Data tidak ditemukan</p>
-                @endforelse
+
+                </a>
+
+                {{-- HOVER BUTTON --}}
+                <div class="card-actions">
+
+                    <div class="d-flex gap-2">
+
+                        {{-- BUY --}}
+                        <a href="{{ route('sparepart.show', $item->id) }}"
+                           class="btn btn-warning buy-btn">
+
+                            Buy Now
+
+                        </a>
+
+                        {{-- ADD TO CART --}}
+                        <form action="{{ route('cart.add') }}"
+                              method="POST">
+
+                            @csrf
+
+                            <input type="hidden"
+                                   name="sparepart_id"
+                                   value="{{ $item->id }}">
+
+                            <button class="btn btn-light cart-btn">
+
+                                <i class="bi bi-bag-plus"></i>
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
             </div>
+
+        </div>
+
+    @empty
+
+        <div class="text-center py-5">
+            <h5>Data tidak ditemukan</h5>
+        </div>
+
+    @endforelse
+
+</div>
 
             <!-- PAGINATION -->
             <div class="d-flex justify-content-center">

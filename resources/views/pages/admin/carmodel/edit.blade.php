@@ -40,6 +40,11 @@
             </div>
 
             <div class="form-group mb-3">
+                <label for="">Car Year</label>
+                <input type="number" name="model_year" class="form-control" value="{{ $carmodel->model_year }}">
+            </div>
+
+            <div class="form-group mb-3">
                 <label for="">Transmissiom</label>
                 <select name="transmission" id="" class="form-select">
                     <option value="manual" {{ $carmodel->transmission == 'manual' ? 'selected' : '' }}>Manual</option>

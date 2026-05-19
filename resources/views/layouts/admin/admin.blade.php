@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title')</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/bootstrap-5.3.8-dist/css/bootstrap.min.css') }}">

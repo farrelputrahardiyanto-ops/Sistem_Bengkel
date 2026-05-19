@@ -24,7 +24,7 @@ img:hover {
 @section('content')
 
 
-<div class="container my-5">
+<div class="container mt-5 shadow rounded-sm">
     <div class="row align-items-center">
 
         <!-- 🔽 IMAGE -->
@@ -70,9 +70,13 @@ img:hover {
             <!-- 🔽 BUTTON -->
             <div class="mt-4 d-flex gap-2">
                 <button class="btn btn-warning px-4">Buy Now</button>
-                <button class="btn btn-outline-dark px-4">
-                    <i class="bi bi-cart"></i> Add to Cart
-                </button>
+                <form action="{{ route('cart.add') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="sparepart_id" value="{{ $spareparts->id }}">
+                    <button class="btn btn-outline-dark px-4">
+                        <i class="bi bi-cart"></i> Add to Cart
+                    </button>
+                </form>
             </div>
 
         </div>

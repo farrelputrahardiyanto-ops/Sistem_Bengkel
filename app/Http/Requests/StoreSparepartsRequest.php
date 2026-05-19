@@ -25,15 +25,17 @@ class StoreSparepartsRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3',
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,webp,file|max:2048',
             'brand_sparepart' => 'required|string',
             'brand_car' => 'required|string',
             'car_type' => 'required|string',
-            'part_code' => 'required|string|unique:t_spareparts, part_code',
+            'part_code' => 'required|string|unique:t_spareparts,part_code',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:1',
-            'description' => 'required|string',
+            'description' => 'required|string'
             
         ];
     }
 }
+
+

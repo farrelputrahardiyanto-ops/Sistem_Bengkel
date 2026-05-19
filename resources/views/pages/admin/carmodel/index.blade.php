@@ -19,6 +19,7 @@
                             <th>Brand ID</th>
                             <th>Img</th>
                             <th>Name</th>
+                            <th>Model Year</th>
                             <th>Transmission</th>
                             <th>Tutor Car</th>
                             <th>Action</th>
@@ -29,10 +30,11 @@
                         <tr>
 
                         <td>{{$carmodel->brand_id}}</td>
-                        <td><img src="{{ asset('storage/' . $carmodel->img) }}" alt="{{ $carmodel->name }}" width="100"></td>
+                        <td><img src="{{ asset('storage/carmodel/' . $carmodel->img) }}" alt="{{ $carmodel->name }}" width="100"></td>
                         <td>{{$carmodel->name}}</td>
+                        <td>{{ $carmodel->model_year }}</td>
                         <td>{{$carmodel->transmission}}</td>
-                        <td>{{$carmodel->is_tutor_car}}</td>
+                        <td>{{$carmodel->is_tutor_car == 1 ? 'Yes' : 'No'}}</td>
                         <td class="d-flex">
                             <a href="{{ route('carmodel.edit', $carmodel->id) }}" class="btn btn-sm btn-warning mx-1">Edit</a>
 

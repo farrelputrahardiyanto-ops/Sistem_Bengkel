@@ -23,11 +23,12 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'profile_picture' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+            'profile_picture' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
             'name' => 'required|min:3',
             'no_whatsapp' => 'required|unique:t_users,no_whatsapp',
             'email' => 'required|email|unique:t_users,email',
-            'password' => 'required|min:5|confirmed:confirm_password'
+            'password' => 'required|min:5|confirmed',
+            'role' => 'nullable|in:user,tutor,admin'
         ];
     }
 }

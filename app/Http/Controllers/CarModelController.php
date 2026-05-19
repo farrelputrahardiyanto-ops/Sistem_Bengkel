@@ -44,7 +44,7 @@ class CarModelController extends Controller
 
     }
 
-    public function store(UpdateCarModelRequest $request)
+    public function store(StoreCarModelRequest $request)
     {
         $data = $request->validated();
 
@@ -70,11 +70,11 @@ class CarModelController extends Controller
 
     }
 
-    public function update(string $id, StoreCarModelRequest $request)
+    public function update(string $id, UpdateCarModelRequest $request)
     {
         $carmodel = CarModel::findOrFail($id);
 
-        $data = $request->validate();
+        $data = $request->validated();
 
         if($request->hasFile('img'))
             {

@@ -1,6 +1,22 @@
 @extends('layouts.admin.form')
 
 @section('title', 'Create User')
+
+
+
+
+@section('content')
+
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <div class="container my-5">
         <div class="row">
             <div class="col-md-12">
@@ -18,7 +34,9 @@
                     </div>
                     <div class="card-body  mx-3">
 
-                        <form action="{{ route('user.store')}}" method="post"  enctype="multipart/form-data">
+                        <form action="{{ route('user.store')}}" method="POST"  enctype="multipart/form-data">
+
+                            @csrf
 
                             <div class="form-group mb-3">
                                 <label for="" class="font-weight-bold">Profile Picture</label>
@@ -41,13 +59,22 @@
                             </div>
 
                             <div class="form-group mb-3">
+                                <label for="">Role</label>
+                                <select name="role" class="form-control">
+                                    <option value="user">User</option>
+                                    <option value="tutor">Tutor</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-3">
                                 <label for="">Password</label>
                                 <input type="password" name="password" class="form-control">
                             </div>
 
                             <div class="form-group mb-3">
                                 <label for="">Confirm Password</label>
-                                <input type="password" name="confirm_password" class="form-control">
+                                <input type="password" name="password_confirmation" class="form-control">
                             </div>
 
                             <div class="row">

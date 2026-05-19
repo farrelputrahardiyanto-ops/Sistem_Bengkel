@@ -12,7 +12,7 @@ class UpdateCarModelRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,11 +23,13 @@ class UpdateCarModelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'brand_id' => 'required|exists:t_car_brands,id',
+            'brand_id' => 'required|exists:t_car_brand,id',
             'name' => 'required|string|min:3',
+            'model_year' => 'required|integer',
             'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'transmission' => 'required|in:manual,matic',
             'is_tutor_car' => 'required|boolean',
+            
         ];
     }
 }

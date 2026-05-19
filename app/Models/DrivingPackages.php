@@ -13,6 +13,8 @@ class DrivingPackages extends Model
     protected $fillable = [
         'transmission_type',
         'ac_type',
+        'tutor_id',
+        'car_id',
         'total_hours',
         'price',
     ];

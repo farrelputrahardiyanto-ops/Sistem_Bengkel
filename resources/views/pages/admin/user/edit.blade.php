@@ -1,6 +1,16 @@
 @extends('layouts.admin.form')
 @section('title', 'Edit User')
 @section('content')
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <div class="container my-5">
         <div class="row">
             <div class="col-md-12">
@@ -40,13 +50,22 @@
                             </div>
 
                             <div class="form-group mb-3">
+                                <label for="">Role</label>
+                                <select name="role" class="form-control">
+                                    <option value="user" {{ $user->role === 'user' ? 'selected' : '' }}>User</option>
+                                    <option value="tutor" {{ $user->role === 'tutor' ? 'selected' : '' }}>Tutor</option>
+                                    <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-3">
                                 <label for="">Password</label>
                                 <input type="password" name="password" class="form-control" value="">
                             </div>
 
                             <div class="form-group mb-3">
                                 <label for="">Confirm Password</label>
-                                <input type="password" name="confirm_password" class="form-control">
+                                <input type="password" name="password_confirmation" class="form-control">
                             </div>
 
                             <div class="row">

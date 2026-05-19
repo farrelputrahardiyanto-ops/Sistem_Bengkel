@@ -35,6 +35,12 @@
                 <input type="text" name="name" class="form-control">
             </div>
 
+
+            <div class="form-group-mb-3">
+                <label for="">Car Year</label>
+                <input type="number" name="model_year" class="form-control">
+            </div>
+
             <div class="form-group mb-3">
                 <label for="">Transmissiom</label>
                 <select name="transmission" id="" class="form-select">

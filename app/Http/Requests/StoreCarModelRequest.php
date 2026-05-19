@@ -25,6 +25,7 @@ class StoreCarModelRequest extends FormRequest
         return [
             'brand_id' => 'required|exists:t_car_brand,id',
             'name' => 'required|string|min:3',
+            'model_year' => 'required|integer',
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'transmission' => 'required|in:manual,matic',
             'is_tutor_car' => 'required|boolean', 

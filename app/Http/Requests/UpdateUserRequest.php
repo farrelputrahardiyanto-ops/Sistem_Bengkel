@@ -27,7 +27,8 @@ class UpdateUserRequest extends FormRequest
             'name' => 'required|min:3',
             'no_whatsapp' => 'required|unique:t_users,no_whatsapp,' . $this->route('user'),
             'email' => 'required|email|unique:t_users,email,' . $this->route('user'),
-            'password' => 'nullable|min:5|confirmed'
+            'password' => 'nullable|min:5|confirmed',
+            'role' => 'required|in:user,tutor,admin'
         ];
     }
 }
