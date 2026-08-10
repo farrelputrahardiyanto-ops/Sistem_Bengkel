@@ -222,7 +222,10 @@
                     {{-- IMAGE --}}
                     <div class="package-image">
 
-                        <img src="{{ asset('storage/carmodel/'.$item->car->img) }}">
+                        <img src="{{ asset($item->package_id == '1'
+                        ? 'driving_course/ac.jpg'
+                        : 'driving_course/non_ac.png')
+                         }}">
 
                     </div>
 
@@ -265,7 +268,7 @@
 
                             <h6 class="fw-bold mb-0">
 
-                                {{ $item->car->name }}
+                                {{-- {{ $item->car->name }} --}}
 
                             </h6>
 
@@ -280,7 +283,7 @@
 
                             <h6 class="fw-bold mb-0">
 
-                                {{ $item->tutor->name }}
+                                {{-- {{ $item->tutor->name }} --}}
 
                             </h6>
 
@@ -436,7 +439,7 @@
 
                             <h6 class="fw-bold mb-0">
 
-                                {{ $session->userPackage->car->name }}
+                                {{ $session->car->name }}
 
                             </h6>
 
@@ -451,7 +454,7 @@
 
                             <h6 class="fw-bold mb-0">
 
-                                {{ $session->userPackage->tutor->name }}
+                                {{ $session->tutor->name }}
 
                             </h6>
 
@@ -515,46 +518,89 @@
 {{-- PACKAGE --}}
 <div class="container package-section pb-5">
 
-    <div class="row g-4">
+    <div class="row justify-content-center g-4">
 
-        {{-- MATIC AC --}}
-        <div class="col-lg-3 col-md-6 col-6">
+        @foreach($packages as $package)
+
+        <div class="col-lg-5 col-md-6">
+
             <div class="card shadow package-card h-100">
 
+                {{-- IMAGE --}}
                 <div class="package-image">
-                    <img src="{{ asset('images/driving_course/avanza2025.jpg') }}">
+
+                    <img src="{{ asset(
+                        $package->ac_type == 'ac'
+                        ? 'driving_course/ac.jpg'
+                        : 'driving_course/non_ac.png'
+                    ) }}">
+
+                    <p>{{ $package->ac_type }}</p>
+
                 </div>
 
+                {{-- BODY --}}
                 <div class="package-body d-flex flex-column h-100">
 
                     <div class="package-badge">
-                        Best Seller
+
+                        {{ $package->ac_type == 'ac'
+                            ? 'Premium Package'
+                            : 'Economy Package' }}
+
                     </div>
 
                     <div class="package-title">
-                        Matic AC
+
+                        Paket
+                        {{ strtoupper(str_replace('_',' ',$package->ac_type)) }}
+
                     </div>
 
                     <div class="package-price mt-2">
-                        Rp 500K
+
+                        Rp {{ number_format($package->price,0,',','.') }}
+
                     </div>
 
                     <ul class="package-list flex-grow-1">
-                        <li>6 Jam Belajar</li>
-                        <li>Mobil AC</li>
-                        <li>Instruktur Profesional</li>
-                        <li>Latihan Jalan Raya</li>
+
+                        <li>
+                            {{ $package->total_hours }}
+                            Jam Belajar Mengemudi
+                        </li>
+
+                        <li>
+                            {{ $package->ac_type == 'ac'
+                                ? 'Mobil AC'
+                                : 'Mobil Non AC' }}
+                        </li>
+
+                        <li>
+                            Pilih Mobil Sendiri
+                        </li>
+
+                        <li>
+                            Pilih Instruktur Sendiri
+                        </li>
+
+                        <li>
+                            Jadwal Fleksibel
+                        </li>
+
                     </ul>
 
                     <div class="package-footer">
 
-                        <form action="{{ route('register.course', $packages[1]->id) }}" method="GET">
+                        <form
+                            action="{{ route('register.course', $package->id) }}"
+                            method="GET">
 
-                            <input type="hidden" name="transmission" value="matic">
-                            <input type="hidden" name="ac_type" value="ac">
+                            <button
+                                class="btn btn-warning w-100 btn-package">
 
-                            <button class="btn btn-warning w-100 btn-package">
                                 Pilih Paket
+
                             </button>
 
                         </form>
@@ -564,154 +610,10 @@
                 </div>
 
             </div>
+
         </div>
 
-        {{-- MANUAL AC --}}
-        <div class="col-lg-3 col-md-6 col-6">
-            <div class="card shadow package-card h-100">
-
-                <div class="package-image">
-                    <img src="{{ asset('images/driving_course/avanza2025.jpg') }}">
-                </div>
-
-                <div class="package-body d-flex flex-column h-100">
-
-                    <div class="package-badge">
-                        Popular
-                    </div>
-
-                    <div class="package-title">
-                        Manual AC
-                    </div>
-
-                    <div class="package-price mt-2">
-                        Rp 500K
-                    </div>
-
-                    <ul class="package-list flex-grow-1">
-                        <li>6 Jam Belajar</li>
-                        <li>Mobil AC</li>
-                        <li>Kopling & Tanjakan</li>
-                        <li>Instruktur Profesional</li>
-                    </ul>
-
-                    <div class="package-footer">
-
-                        <form action="{{ route('register.course', $packages[3]->id) }}" method="GET">
-
-                            <input type="hidden" name="transmission" value="manual">
-                            <input type="hidden" name="ac_type" value="ac">
-
-                            <button class="btn btn-warning w-100 btn-package">
-                                Pilih Paket
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-        {{-- MATIC NON AC --}}
-        <div class="col-lg-3 col-md-6 col-6">
-            <div class="card shadow package-card h-100">
-
-                <div class="package-image">
-                    <img src="{{ asset('images/driving_course/avanza2025.jpg') }}">
-                </div>
-
-                <div class="package-body d-flex flex-column h-100">
-
-                    <div class="package-badge">
-                        Hemat
-                    </div>
-
-                    <div class="package-title">
-                        Matic Non AC
-                    </div>
-
-                    <div class="package-price mt-2">
-                        Rp 450K
-                    </div>
-
-                    <ul class="package-list flex-grow-1">
-                        <li>6 Jam Belajar</li>
-                        <li>Mobil Non AC</li>
-                        <li>Cocok Pemula</li>
-                        <li>Instruktur Profesional</li>
-                    </ul>
-
-                    <div class="package-footer">
-
-                        <form action="{{ route('register.course', $packages[4]->id) }}" method="GET">
-
-                            <input type="hidden" name="transmission" value="matic">
-                            <input type="hidden" name="ac_type" value="non_ac">
-
-                            <button class="btn btn-warning w-100 btn-package">
-                                Pilih Paket
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-        {{-- MANUAL NON AC --}}
-        <div class="col-lg-3 col-md-6 col-6">
-            <div class="card shadow package-card h-100">
-
-                <div class="package-image">
-                    <img src="{{ asset('images/driving_course/avanza2025.jpg') }}">
-                </div>
-
-                <div class="package-body d-flex flex-column h-100">
-
-                    <div class="package-badge">
-                        Basic
-                    </div>
-
-                    <div class="package-title">
-                        Manual Non AC
-                    </div>
-
-                    <div class="package-price mt-2">
-                        Rp 450K
-                    </div>
-
-                    <ul class="package-list flex-grow-1">
-                        <li>6 Jam Belajar</li>
-                        <li>Mobil Non AC</li>
-                        <li>Latihan Kopling</li>
-                        <li>Instruktur Profesional</li>
-                    </ul>
-
-                    <div class="package-footer">
-
-                        <form action="{{ route('register.course', $packages[5]->id) }}" method="GET">
-
-                            <input type="hidden" name="transmission" value="manual">
-                            <input type="hidden" name="ac_type" value="non_ac">
-
-                            <button class="btn btn-warning w-100 btn-package">
-                                Pilih Paket
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
+        @endforeach
 
     </div>
 

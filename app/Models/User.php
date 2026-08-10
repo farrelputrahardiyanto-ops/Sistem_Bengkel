@@ -35,4 +35,8 @@ class User extends Authenticatable
     {
         return $this->role === 'user';
     }
+    public function scopeTutor($query)
+{
+    return $query->where('role', 'tutor');
+}
     }

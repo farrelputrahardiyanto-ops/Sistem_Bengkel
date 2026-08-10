@@ -19,7 +19,7 @@ class HomeController extends Controller
 
     public function servis(){
         $services = Service::with('car.model')
-        ->where('user_id', auth()->id())
+        ->where('user_id', Auth::id())
         ->latest()
         ->get();
 
@@ -27,41 +27,36 @@ class HomeController extends Controller
     }
 
 public function driving_course()
-{
-    $packages = DrivingPackages::all()->keyBy('id');
+    {
+        $packages = DrivingPackages::all();
 
-    $userPackages = UserDrivingPackages::with([
-            'package',
-            'car',
-            'tutor'
+        $userPackages = UserDrivingPackages::with([
+            'package'
         ])
         ->where('user_id', Auth::id())
         ->where('status', 'active')
-        ->latest()
         ->get();
 
-    $drivingSessions = DrivingSession::with([
+        $drivingSessions = DrivingSession::with([
             'car',
-            'instructor',
+            'tutor',
             'userPackage'
         ])
-        ->whereHas('userPackage', function($q){
-
+        ->whereHas('userPackage', function ($q) {
             $q->where('user_id', Auth::id());
-
         })
         ->latest()
         ->get();
 
-    return view(
-        'pages.user.driving_course',
-        compact(
-            'packages',
-            'userPackages',
-            'drivingSessions'
-        )
-    );
-}
+        return view(
+            'pages.user.driving_course',
+            compact(
+                'packages',
+                'userPackages',
+                'drivingSessions'
+            )
+        );
+    }
 
     public function contact(){
         return view('pages.user.contact');

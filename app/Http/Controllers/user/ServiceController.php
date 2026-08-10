@@ -27,7 +27,26 @@ class ServiceController extends Controller
     }
 
 
-    // 🔹 SIMPAN DATA MOBIL USER
+    public function store(Request $request)
+{
+    $request->validate([
+        'plate_number' => 'required|string|max:255|unique:t_service_cars,plate_number',
+        'car_model_id' => 'required|exists:t_car_models,id',
+    ]);
+
+    ServiceCars::create([
+        'plate_number' => strtoupper($request->plate_number),
+        'user_id'      => Auth::id(),
+        'car_model_id' => $request->car_model_id,
+        'is_active'    => 1,
+    ]);
+
+    return redirect()
+        ->back()
+        ->with('success', 'Car successfully added');  
+
+
+}
    
     public function booking($id)
     {

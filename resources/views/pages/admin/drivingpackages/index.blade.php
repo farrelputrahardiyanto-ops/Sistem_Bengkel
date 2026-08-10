@@ -16,7 +16,6 @@
                          <a href="{{ route('drivingpackage.create')}}"  class="btn btn-md btn-primary my-2">Create</a>
                         <thead>
                             <tr>
-                                <th>Transmission Type</th>
                                 <th>AC Type</th>
                                 <th>Total Hours</th>
                                 <th>Price</th>
@@ -26,7 +25,6 @@
                         <tbody>
                             @foreach($drivingPackages as $package)
                             <tr>
-                                <td>{{ $package->transmission_type }}</td>
                                 <td>{{ $package->ac_type }}</td>
                                 <td>{{ $package->total_hours }}</td>
                                 <td>{{ $package->price }}</td>

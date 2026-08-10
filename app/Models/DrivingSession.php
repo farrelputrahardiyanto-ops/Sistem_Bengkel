@@ -11,8 +11,12 @@ class DrivingSession extends Model
     protected $fillable = [
         'id',
         'id_user_package',
+        'car_id',
+        'tutor_id',
         'used_hours',
         'session_date',
+        'start_datetime',
+        'end_datetime',
         'status',
         'note',
         ];
@@ -42,4 +46,13 @@ class DrivingSession extends Model
         );
 
 }
+
+     public function tutor()
+    {
+        return $this->belongsTo(User::class, 'tutor_id');
+    }
+
+    // sekalian tambahkan relasi lain yang mungkin juga belum ada
+ 
+    
 }

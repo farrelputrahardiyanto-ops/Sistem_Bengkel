@@ -48,7 +48,7 @@ Route::middleware(['auth', 'isUser'])->group(function () {
 
 
 
-    Route::get('/belajar-mengemudi/register/{id}',[DrivingCourseController::class, 'register'])->name('register.course');
+    Route::get('/belajar-mengemudi/register/{id}',[DrivingCourseController::class, 'checkout'])->name('register.course');
     Route::post('/belajar-mengemudi/register',[DrivingCourseController::class, 'store'])->name('register.course.store');
     Route::get('/belajar-mengemudi-payment-success', [DrivingCourseController::class, 'paymentSuccess'])->name('course.payment.success');
     Route::get('/driving-session/{id}',[DrivingCourseController::class, 'sessionForm'])->name('driving.session.form');

@@ -23,7 +23,6 @@ class StoreDrivingPackagesRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'transmission_type' => 'required|string|max:255',
             'ac_type' => 'required|string|max:255',
             'total_hours' => 'required|integer',
             'price' => 'required|numeric',

@@ -15,20 +15,8 @@
                     <form action="{{ route('drivingpackage.update', $drivingpackages->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="form-group mb-3">
-                            <label for="transmission_type">Transmission Type</label>
-                            <select name="transmission_type" id="" class="form-select">
-                                 <option value="manual" {{ $drivingpackages->transmission_type == 'manual' ? 'selected' : '' }}>
-                                     Manual
-                                </option>
-                                <option value="matic" {{ $drivingpackages->transmission_type == 'matic' ? 'selected' : '' }}>
-                                Matic
-                                </option>
-                            </select>
-                                     @error('transmission_type')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+
+                        
                         <div class="form-group mb-3">
                             <label for="ac_type">AC Type</label>
                             <select name="ac_type" id="" class="form-select">

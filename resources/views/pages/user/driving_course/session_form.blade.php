@@ -60,13 +60,15 @@
     margin-bottom:8px;
 }
 
-.form-control{
+.form-control,
+.form-select{
     border-radius:14px;
     padding:12px;
     border:1px solid #ddd;
 }
 
-.form-control:focus{
+.form-control:focus,
+.form-select:focus{
     box-shadow:none;
     border-color:#ffc107;
 }
@@ -75,6 +77,106 @@
     border-radius:14px;
     padding:14px;
     font-weight:600;
+}
+
+/* --- Car picker (marketplace style) --- */
+
+.car-picker{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));
+    gap:16px;
+}
+
+.car-option{
+    display:none;
+}
+
+.car-option-label{
+    display:block;
+    border:2px solid #eee;
+    border-radius:18px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.15s;
+    background:#fff;
+    position:relative;
+}
+
+.car-option-label:hover{
+    border-color:#ffe08a;
+    transform:translateY(-2px);
+}
+
+.car-option:checked + .car-option-label{
+    border-color:#ffc107;
+    box-shadow:0 0 0 3px rgba(255,193,7,.25);
+}
+
+.car-option-label img{
+    width:100%;
+    height:120px;
+    object-fit:cover;
+    background:#f1f1f1;
+    display:block;
+}
+
+.car-option-info{
+    padding:12px;
+}
+
+.car-option-info strong{
+    display:block;
+    font-size:14px;
+    line-height:1.3;
+}
+
+.car-option-info .car-year{
+    font-size:11px;
+    color:#999;
+}
+
+.car-option-badges{
+    display:flex;
+    gap:6px;
+    margin-top:8px;
+    flex-wrap:wrap;
+}
+
+.badge-transmission{
+    display:inline-block;
+    background:#111;
+    color:#ffc107;
+    font-size:10px;
+    padding:3px 9px;
+    border-radius:20px;
+    text-transform:capitalize;
+}
+
+.badge-ac{
+    display:inline-block;
+    background:#e7f3ff;
+    color:#0d6efd;
+    font-size:10px;
+    padding:3px 9px;
+    border-radius:20px;
+    text-transform:uppercase;
+}
+
+.badge-stock{
+    display:inline-block;
+    background:#f1f1f1;
+    color:#555;
+    font-size:10px;
+    padding:3px 9px;
+    border-radius:20px;
+}
+
+.car-picker-empty{
+    padding:20px;
+    text-align:center;
+    color:#999;
+    border:1px dashed #ddd;
+    border-radius:16px;
 }
 
 @media(max-width:768px){
@@ -115,12 +217,12 @@
                         </h2>
 
                         <p class="mt-3">
-                            Schedule your next driving lesson.
+                            Jadwalkan sesi latihan mengemudi berikutnya.
                         </p>
 
                         <div class="info-box">
 
-                            <small>Package</small>
+                            <small>Paket</small>
 
                             <h5>
                                 {{ ucfirst($userPackage->package->transmission_type) }}
@@ -130,30 +232,40 @@
 
                         <div class="info-box">
 
-                            <small>Car</small>
+                            <small>Tipe AC</small>
 
                             <h5>
-                                {{ $userPackage->car->name }}
+                                {{ strtoupper($userPackage->package->ac_type) }}
                             </h5>
 
                         </div>
 
                         <div class="info-box">
 
-                            <small>Instructor</small>
+                            <small>Sisa Jam</small>
 
                             <h5>
-                                {{ $userPackage->tutor->name }}
+                                {{ $userPackage->remaining_hours }} Jam
                             </h5>
 
                         </div>
 
                         <div class="info-box">
 
-                            <small>Remaining Hours</small>
+                            <small>Mobil Tersedia</small>
 
                             <h5>
-                                {{ $userPackage->remaining_hours }} Hours
+                                {{ $cars->count() }} Unit
+                            </h5>
+
+                        </div>
+
+                        <div class="info-box">
+
+                            <small>Tutor Tersedia</small>
+
+                            <h5>
+                                {{ $tutors->count() }} Orang
                             </h5>
 
                         </div>
@@ -168,8 +280,16 @@
                     <div class="form-side">
 
                         <h3 class="form-title mb-4">
-                            Book Session
+                            Buat Sesi
                         </h3>
+
+                        @if(session('error'))
+
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+
+                        @endif
 
                         <form action="{{ route('driving.session.store') }}"
                               method="POST">
@@ -185,7 +305,7 @@
                                 <div class="col-md-6 mb-3">
 
                                     <label class="form-label">
-                                        Session Date
+                                        Tanggal Sesi
                                     </label>
 
                                     <input type="date"
@@ -198,7 +318,7 @@
                                 <div class="col-md-6 mb-3">
 
                                     <label class="form-label">
-                                        Start Time
+                                        Jam Mulai
                                     </label>
 
                                     <input type="time"
@@ -211,22 +331,118 @@
                                 <div class="col-md-6 mb-3">
 
                                     <label class="form-label">
-                                        Use Hours
+                                        Gunakan Jam
                                     </label>
 
                                     <input type="number"
                                            name="used_hours"
+                                           min="1"
                                            class="form-control"
                                            required>
 
                                 </div>
 
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        Tutor
+                                    </label>
+
+                                    <select name="tutor_id"
+                                            class="form-select"
+                                            required>
+
+                                        <option value="" selected disabled>
+                                            Pilih tutor
+                                        </option>
+
+                                        @foreach($tutors as $tutor)
+
+                                            <option value="{{ $tutor->id }}">
+                                                {{ $tutor->name }}
+                                            </option>
+
+                                        @endforeach
+
+                                    </select>
+
+                                </div>
+
+                                <div class="col-12 mb-3">
+
+                                    <label class="form-label">
+                                        Pilih Mobil
+                                    </label>
+
+                                    @if($cars->isEmpty())
+
+                                        <div class="car-picker-empty">
+                                            Belum ada mobil yang tersedia untuk tipe AC paket ini.
+                                        </div>
+
+                                    @else
+
+                                        <div class="car-picker">
+
+                                            @foreach($cars as $car)
+
+                                                <input type="radio"
+                                                       name="car_id"
+                                                       id="car-{{ $car->id }}"
+                                                       value="{{ $car->id }}"
+                                                       class="car-option"
+                                                       required>
+
+                                                <label for="car-{{ $car->id }}"
+                                                       class="car-option-label">
+
+                                                    <img src="{{ $car->car->img ? asset('storage/'.$car->carmodel) : asset('images/no-car.png') }}"
+                                                         alt="{{ $car->car->brand->name }} {{ $car->car->name }}">
+
+                                                    <div class="car-option-info">
+
+                                                        <strong>
+                                                            {{ $car->car->brand->name }}
+                                                            {{ $car->car->name }}
+                                                        </strong>
+
+                                                        <span class="car-year">
+                                                            {{ $car->car->model_year }}
+                                                        </span>
+
+                                                        <div class="car-option-badges">
+
+                                                            <span class="badge-transmission">
+                                                                {{ $car->car->transmission }}
+                                                            </span>
+
+                                                            <span class="badge-ac">
+                                                                {{ $car->ac_type }}
+                                                            </span>
+
+                                                            <span class="badge-stock">
+                                                                Stok {{ $car->amount }}
+                                                            </span>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </label>
+
+                                            @endforeach
+
+                                        </div>
+
+                                    @endif
+
+                                </div>
 
                                 <div class="col-12 mt-3">
 
                                     <button class="btn btn-warning w-100 btn-submit">
 
-                                        Create Session
+                                        Buat Sesi
 
                                     </button>
 

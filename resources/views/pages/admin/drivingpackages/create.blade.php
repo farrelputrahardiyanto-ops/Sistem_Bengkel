@@ -14,16 +14,7 @@
                 <div class="card-body">
                     <form action="{{ route('drivingpackage.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group mb-3">
-                            <label for="transmission_type">Transmission Type</label>
-                            <select name="transmission_type" id="" class="form-select">
-                                <option value="Manual">Manual</option>
-                                <option value="Matic">Matic</option>
-                            </select>
-                                     @error('transmission_type')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+
                         <div class="form-group mb-3">
                             <label for="ac_type">AC Type</label>
                             <select name="ac_type" id="" class="form-select">
