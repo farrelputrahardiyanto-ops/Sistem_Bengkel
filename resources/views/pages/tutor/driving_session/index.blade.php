@@ -41,11 +41,11 @@
                             </td>
 
                             <td>
-                                {{ $item->userPackage->car->name }}
+                                {{ $item->car->name }}
                             </td>
 
                             <td>
-                                {{ ucfirst($item->userPackage->package->transmission_type) }}
+                                {{ ucfirst($item->userPackage->package->ac_type) }}
                             </td>
 
                             <td>

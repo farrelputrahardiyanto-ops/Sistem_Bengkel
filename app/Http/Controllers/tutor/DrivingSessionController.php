@@ -108,7 +108,7 @@ class DrivingSessionController extends Controller
         ]);
 
         return redirect()
-            ->route('tutor.driving.session')
+            ->route('tutor.driving-session.index')
             ->with(
                 'success',
                 'Session updated successfully'
