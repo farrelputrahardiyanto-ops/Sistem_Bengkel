@@ -24,6 +24,7 @@ WORKDIR /var/www/html
 
 # Copy Laravel project
 COPY . .
+RUN chmod 644 storage/certs/ca.pem
 
 # Install PHP dependencies
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
